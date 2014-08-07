@@ -13,8 +13,10 @@ public class AppTest {
 
     @Test
     public void generalTest() throws MalformedURLException {
-        URL url = new URL("http://www.cnn.com/");
-        Scraper scraper = new Scraper(url, Arrays.asList("Greece", "default"));
+        String s = "http://www.cnn.com/";
+        URL url = new URL(s);
+        Scraper scraper = new Scraper(url, Arrays.asList("says", "default", "China"));
         scraper.scrap();
+        scraper.printResults();
     }
 }

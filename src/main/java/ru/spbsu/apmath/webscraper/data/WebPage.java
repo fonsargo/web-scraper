@@ -12,12 +12,15 @@ import java.util.List;
 public class WebPage {
     private URL url;
     private List<Word> words;
-    private long timeSpent;
+    private long scrapTime;
+    private long processTime;
     private int numberOfCharacters;
+    private String errorMessage;
 
     public WebPage(URL url, List<Word> words) {
         this.url = url;
         this.words = words;
+        this.numberOfCharacters = 0;
     }
 
     public URL getUrl() {
@@ -26,5 +29,35 @@ public class WebPage {
 
     public List<Word> getWords() {
         return words;
+    }
+
+    public void addToNumberOfCharacters(int addition) {
+        this.numberOfCharacters += addition;
+    }
+
+    public void setProcessTime(long processTime) {
+        this.processTime = processTime;
+    }
+
+    public void setScrapTime(long scrapTime) {
+        this.scrapTime = scrapTime;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for (Word word: words) {
+            s += word.toString();
+        }
+        return String.format("%s\n\tscrap time: %s ms\n\tprocess time: %s ms\n\tnumber of characters: %s\n\twords:\n%s",
+                url, scrapTime, processTime, numberOfCharacters, s);
     }
 }

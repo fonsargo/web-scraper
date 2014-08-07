@@ -39,4 +39,13 @@ public class Word {
     public void addSentence(String sentence) {
         this.sentences.add(sentence);
     }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for (String sentence: sentences) {
+            s += String.format("\t\t\t%s\n", sentence);
+        }
+        return String.format("\t%s\n\t\tcount: %s\n\t\tsentences (%s):\n%s", word, count, sentences.size(), s);
+    }
 }
