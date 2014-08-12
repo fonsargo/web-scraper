@@ -6,7 +6,6 @@ import ru.spbsu.apmath.webscraper.data.Word;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class Scraper {
     }
 
     public void printResults(boolean printTimeSpent, boolean printNumberOfCharacters, boolean printNumberOfWords,
-                             boolean printSentences) throws MalformedURLException {
+                             boolean printSentences) {
         List<Word> wordList = getWords(originalWords);
         WebPage totalPage = new WebPage("TOTAL", wordList);
         for (WebPage webPage : webPages) {
