@@ -3,6 +3,8 @@ package ru.spbsu.apmath.webscraper.data;
 import java.net.URL;
 import java.util.List;
 
+import static ru.spbsu.apmath.webscraper.PageUtils.getWordsString;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Афонин Сергей (hrundelb@yandex.ru)
@@ -31,6 +33,18 @@ public class WebPage {
         return words;
     }
 
+    public long getScrapTime() {
+        return scrapTime;
+    }
+
+    public long getProcessTime() {
+        return processTime;
+    }
+
+    public int getNumberOfCharacters() {
+        return numberOfCharacters;
+    }
+
     public void addToNumberOfCharacters(int addition) {
         this.numberOfCharacters += addition;
     }
@@ -52,12 +66,8 @@ public class WebPage {
         if (errorMessage != null) {
             return String.format("%s\n\terror: %s\n", url, errorMessage);
         } else {
-            String s = "";
-            for (Word word : words) {
-                s += word.toString();
-            }
             return String.format("%s\n\tscrap time: %s ms\n\tprocess time: %s ms\n\tnumber of characters: %s\n\twords:\n%s",
-                    url, scrapTime, processTime, numberOfCharacters, s);
+                    url, scrapTime, processTime, numberOfCharacters, getWordsString(words));
         }
     }
 }

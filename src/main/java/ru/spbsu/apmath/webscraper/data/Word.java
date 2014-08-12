@@ -28,8 +28,24 @@ public class Word {
         this.count++;
     }
 
+    public void increaseCount(int n) {
+        this.count += n;
+    }
+
     public void addSentence(String sentence) {
         this.sentences.add(sentence);
+    }
+
+    public void addSentences(List<String> sentences) {
+        this.sentences.addAll(sentences);
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public List<String> getSentences() {
+        return sentences;
     }
 
     @Override

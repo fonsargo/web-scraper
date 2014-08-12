@@ -15,9 +15,9 @@ public class AppTest {
 
     private static final String CNN = "http://www.cnn.com/";
     private static final String BBC = "http://www.bbc.com/";
-    private static final String NYTIMES = "http://www.nytimes.com/";
+    private static final String WASHINGTONPOST = "http://www.washingtonpost.com/";
     private static final String UNEXICTING_URL = "http://www.cnn123456.com/";
-    private static final List<String> WORDS = Arrays.asList("says", "default", "China");
+    private static final List<String> WORDS = Arrays.asList("has", "default", "Russia");
 
     @Test
     public void scraperTestWithOneUrl() throws MalformedURLException {
@@ -32,7 +32,7 @@ public class AppTest {
         List<URL> urls = new ArrayList<URL>();
         urls.add(new URL(CNN));
         urls.add(new URL(BBC));
-        urls.add(new URL(NYTIMES));
+        urls.add(new URL(WASHINGTONPOST));
         Scraper scraper = new Scraper(urls, WORDS);
         scraper.scrap();
         scraper.printResults();
@@ -44,7 +44,7 @@ public class AppTest {
         urls.add(new URL(CNN));
         urls.add(new URL(BBC));
         urls.add(new URL(UNEXICTING_URL));
-        urls.add(new URL(NYTIMES));
+        urls.add(new URL(WASHINGTONPOST));
         Scraper scraper = new Scraper(urls, WORDS);
         scraper.scrap();
         scraper.printResults();

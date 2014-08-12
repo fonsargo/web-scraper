@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,8 +46,8 @@ public class PageUtils {
     }
 
     public static void findWords(String text, Word word) {
-        Pattern wordPattern = Pattern.compile(String.format("(\\W+|^)%s(\\W+|$)", word.getWord()));
-        Matcher wordMatcher = wordPattern.matcher(text);
+        Pattern wordPattern = Pattern.compile(String.format("(\\W+|^)%s(\\W+|$)", word.getWord().toLowerCase()));
+        Matcher wordMatcher = wordPattern.matcher(text.toLowerCase());
         while (wordMatcher.find()) {
             word.increaseCount();
         }
@@ -54,10 +55,10 @@ public class PageUtils {
 
     public static void findSentences(String text, Word word) {
         Pattern sentencePattern = Pattern.compile(String.format("[^\\.!?]*([^\\w\\.!?]+|^)%s([\\.!?]|\\W+[^\\.!?]*|$)",
-                word.getWord()));
-        Matcher sentenceMatcher = sentencePattern.matcher(text);
+                word.getWord().toLowerCase()));
+        Matcher sentenceMatcher = sentencePattern.matcher(text.toLowerCase());
         while (sentenceMatcher.find()) {
-            word.addSentence(sentenceMatcher.group(0));
+            word.addSentence(text.substring(sentenceMatcher.start(0), sentenceMatcher.end(0)));
         }
     }
 
@@ -68,5 +69,13 @@ public class PageUtils {
         Reader HTMLReader = new InputStreamReader(url.openConnection().getInputStream());
         kit.read(HTMLReader, doc, 0);
         return doc;
+    }
+
+    public static String getWordsString(List<Word> wordList) {
+        String s = "";
+        for (Word word : wordList) {
+            s += word.toString();
+        }
+        return s;
     }
 }
