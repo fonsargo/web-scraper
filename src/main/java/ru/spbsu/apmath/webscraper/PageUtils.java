@@ -32,7 +32,7 @@ public class PageUtils {
                 try {
                     text = doc.getText(elem.getStartOffset(), elem.getEndOffset() - elem.getStartOffset()).trim();
                 } catch (BadLocationException e) {
-                    webPage.setErrorMessage(e.getMessage());
+                    webPage.setErrorMessage(String.format("%s: %s", e.getClass().getName(), e.getMessage()));
                     return;
                 }
                 webPage.addToNumberOfCharacters(text.length());

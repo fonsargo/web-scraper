@@ -23,12 +23,17 @@ public class Scraper {
     private List<WebPage> webPages;
 
     public Scraper(URL url, List<String> words) {
-        List<Word> wordList = new ArrayList<Word>();
-        for (String word : words) {
-            wordList.add(new Word(word));
-        }
+        List<Word> wordList = getWords(words);
         webPages = new ArrayList<WebPage>();
         webPages.add(new WebPage(url, wordList));
+    }
+
+    public Scraper(List<URL> urls, List<String> words) {
+        webPages = new ArrayList<WebPage>();
+        for (URL url: urls) {
+            List<Word> wordList = getWords(words);
+            webPages.add(new WebPage(url, wordList));
+        }
     }
 
     public void scrap() {
@@ -62,5 +67,13 @@ public class Scraper {
         processTime += System.currentTimeMillis();
         webPage.setProcessTime(processTime);
         return;
+    }
+
+    private List<Word> getWords(List<String> words) {
+        List<Word> wordList = new ArrayList<Word>();
+        for (String word : words) {
+            wordList.add(new Word(word));
+        }
+        return wordList;
     }
 }
