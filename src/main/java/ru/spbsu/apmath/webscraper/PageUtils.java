@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +36,7 @@ public class PageUtils {
                     return;
                 }
                 webPage.addToNumberOfCharacters(text.length());
-                for (Word word: webPage.getWords()) {
+                for (Word word : webPage.getWords()) {
                     findWords(text, word);     //We need to find words and sentences separately, because one sentence can include two or more words
                     findSentences(text, word);
                 }
@@ -62,20 +61,12 @@ public class PageUtils {
         }
     }
 
-    public static HTMLDocument getHtmlDocument(URL url) throws IOException, BadLocationException {
+    public static HTMLDocument getHtmlDocument(String url) throws IOException, BadLocationException {
         HTMLEditorKit kit = new HTMLEditorKit();
         HTMLDocument doc = (HTMLDocument) kit.createDefaultDocument();
         doc.putProperty("IgnoreCharsetDirective", Boolean.TRUE);
-        Reader HTMLReader = new InputStreamReader(url.openConnection().getInputStream());
+        Reader HTMLReader = new InputStreamReader(new URL(url).openConnection().getInputStream());
         kit.read(HTMLReader, doc, 0);
         return doc;
-    }
-
-    public static String getWordsString(List<Word> wordList) {
-        String s = "";
-        for (Word word : wordList) {
-            s += word.toString();
-        }
-        return s;
     }
 }

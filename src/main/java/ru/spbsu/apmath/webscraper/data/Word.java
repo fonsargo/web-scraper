@@ -28,32 +28,25 @@ public class Word {
         this.count++;
     }
 
-    public void increaseCount(int n) {
-        this.count += n;
-    }
-
     public void addSentence(String sentence) {
         this.sentences.add(sentence);
     }
 
-    public void addSentences(List<String> sentences) {
-        this.sentences.addAll(sentences);
+    public void add(Word anotherWord) {
+        this.count += anotherWord.count;
+        this.sentences.addAll(anotherWord.sentences);
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public List<String> getSentences() {
-        return sentences;
-    }
-
-    @Override
-    public String toString() {
-        String s = "";
-        for (String sentence: sentences) {
-            s += String.format("\t\t\t%s\n", sentence);
+    public void print(boolean printNumberOfWords, boolean printSentences) {
+        System.out.println(String.format("\t%s", word));
+        if (printNumberOfWords) {
+            System.out.println(String.format("\t\tcount: %s", count));
         }
-        return String.format("\t%s\n\t\tcount: %s\n\t\tsentences (%s):\n%s", word, count, sentences.size(), s);
+        if (printSentences) {
+            System.out.println(String.format("\t\tsentences (%s):", sentences.size()));
+            for (String sentence : sentences) {
+                System.out.println(String.format("\t\t\t%s", sentence));
+            }
+        }
     }
 }

@@ -6,13 +6,12 @@ import ru.spbsu.apmath.webscraper.data.Word;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import java.io.IOException;
-import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static ru.spbsu.apmath.webscraper.PageUtils.findWordsAndSentences;
 import static ru.spbsu.apmath.webscraper.PageUtils.getHtmlDocument;
-import static ru.spbsu.apmath.webscraper.PageUtils.getWordsString;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,17 +23,17 @@ public class Scraper {
     private List<WebPage> webPages;
     private List<String> originalWords;
 
-    public Scraper(URL url, List<String> words) {
+    public Scraper(String url, List<String> words) {
         originalWords = words;
         List<Word> wordList = getWords(words);
         webPages = new ArrayList<WebPage>();
         webPages.add(new WebPage(url, wordList));
     }
 
-    public Scraper(List<URL> urls, List<String> words) {
+    public Scraper(List<String> urls, List<String> words) {
         originalWords = words;
         webPages = new ArrayList<WebPage>();
-        for (URL url: urls) {
+        for (String url : urls) {
             List<Word> wordList = getWords(words);
             webPages.add(new WebPage(url, wordList));
         }
@@ -46,23 +45,15 @@ public class Scraper {
         }
     }
 
-    public void printResults() {
-        long totalScrapTime = 0;
-        long totalProcessTime = 0;
-        int totalNumberOfCharacters = 0;
+    public void printResults(boolean printTimeSpent, boolean printNumberOfCharacters, boolean printNumberOfWords,
+                             boolean printSentences) throws MalformedURLException {
         List<Word> wordList = getWords(originalWords);
-        for (WebPage webPage: webPages) {
-            System.out.println(webPage.toString());
-            totalScrapTime += webPage.getScrapTime();
-            totalProcessTime += webPage.getProcessTime();
-            totalNumberOfCharacters += webPage.getNumberOfCharacters();
-            for (int i = 0; i < webPage.getWords().size(); i++) {
-                wordList.get(i).increaseCount(webPage.getWords().get(i).getCount());
-                wordList.get(i).addSentences(webPage.getWords().get(i).getSentences());
-            }
+        WebPage totalPage = new WebPage("TOTAL", wordList);
+        for (WebPage webPage : webPages) {
+            webPage.print(printTimeSpent, printNumberOfCharacters, printNumberOfWords, printSentences);
+            totalPage.add(webPage);
         }
-        System.out.println(String.format("TOTAL\n\tscrap time: %s ms\n\tprocess time: %s ms\n\tnumber of characters: %s" +
-                        "\n\twords:\n%s", totalScrapTime, totalProcessTime, totalNumberOfCharacters, getWordsString(wordList)));
+        totalPage.print(printTimeSpent, printNumberOfCharacters, printNumberOfWords, printSentences);
     }
 
     private void processPage(WebPage webPage) {
@@ -83,7 +74,6 @@ public class Scraper {
         findWordsAndSentences(webPage, doc);
         processTime += System.currentTimeMillis();
         webPage.setProcessTime(processTime);
-        return;
     }
 
     private List<Word> getWords(List<String> words) {
