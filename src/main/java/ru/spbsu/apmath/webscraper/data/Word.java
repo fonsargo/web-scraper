@@ -24,14 +24,6 @@ public class Word {
         return word;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public List<String> getSentences() {
-        return sentences;
-    }
-
     public void increaseCount() {
         this.count++;
     }

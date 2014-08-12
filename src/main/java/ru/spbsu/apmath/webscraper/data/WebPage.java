@@ -43,21 +43,21 @@ public class WebPage {
         this.scrapTime = scrapTime;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
     @Override
     public String toString() {
-        String s = "";
-        for (Word word: words) {
-            s += word.toString();
+        if (errorMessage != null) {
+            return String.format("%s\n\terror: %s\n", url, errorMessage);
+        } else {
+            String s = "";
+            for (Word word : words) {
+                s += word.toString();
+            }
+            return String.format("%s\n\tscrap time: %s ms\n\tprocess time: %s ms\n\tnumber of characters: %s\n\twords:\n%s",
+                    url, scrapTime, processTime, numberOfCharacters, s);
         }
-        return String.format("%s\n\tscrap time: %s ms\n\tprocess time: %s ms\n\tnumber of characters: %s\n\twords:\n%s",
-                url, scrapTime, processTime, numberOfCharacters, s);
     }
 }

@@ -49,10 +49,10 @@ public class Scraper {
         try {
             doc = getHtmlDocument(webPage.getUrl());
         } catch (IOException e) {
-            webPage.setErrorMessage(e.getMessage());
+            webPage.setErrorMessage(String.format("%s: %s", e.getClass().getName(), e.getMessage()));
             return;
         } catch (BadLocationException e) {
-            webPage.setErrorMessage(e.getMessage());
+            webPage.setErrorMessage(String.format("%s: %s", e.getClass().getName(), e.getMessage()));
             return;
         }
         scrapTime += System.currentTimeMillis();
